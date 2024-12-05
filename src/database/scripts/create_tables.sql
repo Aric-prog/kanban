@@ -1,19 +1,12 @@
 DO $$ BEGIN
-    CREATE TYPE NoteStatus AS ENUM ('To Do', 'In Progress', 'Completed');
+    CREATE TYPE NoteStatus AS ENUM ('To do', 'In progress', 'Completed', 'Expired');
 EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
 
 CREATE TABLE IF NOT EXISTS room(
     id TEXT PRIMARY KEY,
-);
-
-CREATE TABLE IF NOT EXISTS account(
-    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    identifier TEXT UNIQUE
-    roomId INTEGER,
-
-    CONSTRAINT roomId FOREIGN KEY(roomId) REFERENCES room(id)
+    password TEXT
 );
 
 CREATE TABLE IF NOT EXISTS notes(
@@ -23,8 +16,8 @@ CREATE TABLE IF NOT EXISTS notes(
     noteStatus NoteStatus NOT NULL,
     dueDate TIMESTAMPTZ,
 
-    accountId INTEGER,
-    CONSTRAINT accountId FOREIGN KEY(accountId) REFERENCES account(id)
+    roomId INTEGER,
+    CONSTRAINT roomId FOREIGN KEY(roomId) REFERENCES room(id)
 );
 
 

@@ -3,7 +3,7 @@ import { ApplicationOptions } from "@config/ApplicationConfig";
 export default function bootstrap() {
     const applicationOptions: ApplicationOptions = {
         morganConfig: {
-            format: "dev",
+            format: "combined",
             logFileLocation: "./access.log",
         },
     };
