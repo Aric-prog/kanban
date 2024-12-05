@@ -1,0 +1,31 @@
+{
+    "engines": {
+        "node": ">=20.6.0"
+    },
+    "name": "kanban",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "node --env-file=.env --watch -r ts-node/register -r tsconfig-paths/register src/bootstrap.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^22.10.1",
+        "@types/pg": "^8.11.10",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.7.2"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.1",
+        "morgan": "^1.10.0",
+        "pg": "^8.13.1"
+    }
+}

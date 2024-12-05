@@ -3,13 +3,12 @@ logs
 *.log
 npm-debug.log*
 yarn-debug.log*
+.gitlab-ci.yml
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
 # Runtime data
 pids
 *.pid
@@ -34,6 +33,7 @@ bower_components
 
 # node-waf configuration
 .lock-wscript
+*.pdf
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
