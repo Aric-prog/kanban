@@ -15,8 +15,8 @@ export default class RoomRepository {
 
     async insertRoom(room: Room) {
         const { rows } = await this.db.query(
-            `INSERT INTO note(title, notedescription, notestatus, duedate, roomId) 
-            VALUES($1, $2, $3, $4, $5) RETURNING *`,
+            `INSERT INTO room(id, password) 
+            VALUES($1, $2) RETURNING *`,
             [room.id, room.password],
         );
         return rows[0] as Room;

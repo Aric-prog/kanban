@@ -36,7 +36,10 @@ export default class RoomService {
             id: roomId,
             password: this.createHashedPassword(roomId, password),
         };
-        return await this.roomRepository.insertRoom(room);
+
+        await this.roomRepository.insertRoom(room);
+        const token = await this.authenticateUserForRoom(roomId, password);
+        return token;
     }
 
     createHashedPassword(roomId: string, password: string): string {
@@ -51,11 +54,8 @@ export default class RoomService {
     }
 
     async authenticateUserForRoom(roomId: string, password: string) {
-        const room: Room | null = await this.roomRepository.findRoomById(roomId);
-
-        if (!room === null) throw new HttpException("Room does not exist", STATUS_CODE.NOT_FOUND);
-        if (!room.password)
-            throw new HttpException("Room uninitialized", STATUS_CODE.VALIDATION_FAILURE);
+        const room: Room = await this.roomRepository.findRoomById(roomId);
+        if (!room) throw new HttpException("Room does not exist", STATUS_CODE.NOT_FOUND);
 
         const isPasswordCorrect = this.createHashedPassword(roomId, password) === room.password;
         if (!isPasswordCorrect)
@@ -64,8 +64,8 @@ export default class RoomService {
         const tokenData: TokenData = {
             roomId: roomId,
         };
-        const authToken = jwt.sign(tokenData, SECRET, { expiresIn: "3d" });
 
+        const authToken = jwt.sign(tokenData, SECRET, { expiresIn: "3d" });
         return authToken;
     }
 }

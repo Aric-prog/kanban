@@ -18,7 +18,6 @@ export default class App {
     constructor(options: ApplicationOptions) {
         this.server = express();
         this.setup(options);
-
         this.bindServices();
         this.run();
     }
@@ -26,13 +25,13 @@ export default class App {
     setup(options: ApplicationOptions) {
         dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-        this.server.use(express.json());
         this.server.use(morgan(options.morganConfig.format));
         this.server.use(
             morgan(options.morganConfig.format, {
                 stream: fs.createWriteStream("./access.log", { flags: "a" }),
             }),
         );
+        this.server.use(express.json());
     }
 
     bindServices(): void {
@@ -51,7 +50,6 @@ export default class App {
         const kanbanController = new KanbanController(noteService, roomService);
 
         this.server.use(kanbanController.router);
-
         this.server.use(ErrorHandler);
     }
 
