@@ -16,6 +16,7 @@
             "@config/*": ["config/*"],
             "@model/*": ["database/models/*"],
             "@exception/*": ["exception/*"],
+            "@types/*": ["types/*"],
             "@service/*": ["kanban/service/*"],
             "@controller/*": ["kanban/controller/*"],
             "@repository/*": ["kanban/repository/*"],

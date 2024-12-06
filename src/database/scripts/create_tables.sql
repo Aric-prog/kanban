@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS notes(
     noteStatus NoteStatus NOT NULL,
     dueDate TIMESTAMPTZ,
 
-    roomId INTEGER,
+    roomId TEXT,
     CONSTRAINT roomId FOREIGN KEY(roomId) REFERENCES room(id)
 );
 

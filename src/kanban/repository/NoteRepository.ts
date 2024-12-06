@@ -4,14 +4,27 @@ import { Note } from "@model/Note";
 export default class NoteRepository {
     constructor(private readonly db: DbService) {}
 
-    async updateNote(note: Note) {}
-
-    async insertNote(roomId: string, note: Note) {
+    async updateNote(note: Note) {
         const { rows } = await this.db.query(
-            `SELECT account.id, account.email, account.username, account.accounttype, account.accountstatus FROM account 
-            JOIN reviewer ON account.id = reviewer.accountid`,
+            `UPDATE note SET title=$1 noteDescription=$2, noteStatus=$3, dueDate=$4 WHERE id=$5 RETURNING *`,
+            [note.title, note.notedescription, note.notestatus, note.duedate, note.id],
         );
+        return rows[0] as Note;
+    }
 
-        return rows;
+    async insertNote(roomId: string, note: Partial<Note>) {
+        const { rows } = await this.db.query(
+            `INSERT INTO note(title, notedescription, notestatus, duedate, roomId) 
+            VALUES($1, $2, $3, $4, $5) RETURNING *`,
+            [note.title, note.notedescription, note.notestatus, note.duedate, roomId],
+        );
+        return rows[0] as Note;
+    }
+
+    async getAllNotesFromRoom(roomId: string) {
+        const { rows } = await this.db.query(
+            `SELECT * FROM note JOIN room ON room.id = note.roomid`,
+        );
+        return rows as Note[];
     }
 }

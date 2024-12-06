@@ -9,3 +9,5 @@ export type MorganConfig = {
 export type ApplicationOptions = {
     morganConfig: MorganConfig;
 };
+
+export const SECRET = "cats";

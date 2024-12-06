@@ -1,4 +1,4 @@
-import BaseHttpException from "@utils/BaseHttpException";
+import BaseHttpException from "@utils/HttpException";
 import { NextFunction, Request, Response } from "express";
 
 export const ErrorHandler = (err: Error, req: Request, res: Response, next: NextFunction): any => {

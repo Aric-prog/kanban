@@ -6,19 +6,27 @@ export default class RoomRepository {
 
     async findRoomById(roomId: string): Promise<Room> {
         const { rows } = await this.db.query(
-            `SELECT account.id, account.email, account.username, account.accounttype, account.accountstatus FROM account 
-            JOIN reviewer ON account.id = reviewer.accountid`,
+            `SELECT room.id, room.password FROM room WHERE room.id = $1`,
+            [roomId],
         );
 
         return rows[0] as Room;
     }
 
-    async createRoom(room: Room) {
+    async insertRoom(room: Room) {
         const { rows } = await this.db.query(
-            `SELECT account.id, account.email, account.username, account.accounttype, account.accountstatus FROM account 
-            JOIN reviewer ON account.id = reviewer.accountid`,
+            `INSERT INTO note(title, notedescription, notestatus, duedate, roomId) 
+            VALUES($1, $2, $3, $4, $5) RETURNING *`,
+            [room.id, room.password],
         );
+        return rows[0] as Room;
+    }
 
-        return rows;
+    async updateRoomPassword(room: Room) {
+        const { rows } = await this.db.query(
+            `UPDATE room SET room.password = $1 WHERE room.id = $2 RETURNING *`,
+            [room.password, room.id],
+        );
+        return rows[0] as Room;
     }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { DB_RETRY_AMOUNT, DB_RETRY_INTERVAL_IN_SECOND } from "@app/constants/DbConstants";
+import { DB_RETRY_AMOUNT, DB_RETRY_INTERVAL_IN_SECOND } from "@app/constant/DbConstants";
 import { sleep } from "@utils/utils";
 import pg, { DatabaseError } from "pg";
 

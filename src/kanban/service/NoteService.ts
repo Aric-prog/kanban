@@ -5,10 +5,16 @@ import NoteRepository from "@repository/NoteRepository";
 export default class NoteService {
     constructor(private readonly noteRepository: NoteRepository) {}
 
-    async createNoteForRoom(roomId: string, note: string) {}
+    async createNoteForRoom(roomId: string, note: Partial<Note>): Promise<Note> {
+        return await this.noteRepository.insertNote(roomId, note);
+    }
 
-    async updateNoteStatus(noteId: number, note: Note) {}
+    async updateNote(note: Note): Promise<Note> {
+        return await this.noteRepository.updateNote(note);
+    }
 
     // Authenticate with middleware here
-    async getAllNotes(roomId: number) {}
+    async getAllNotesFromRoom(roomId: string) {
+        return await this.noteRepository.getAllNotesFromRoom(roomId);
+    }
 }
