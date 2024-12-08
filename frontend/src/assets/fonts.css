@@ -1,0 +1,39 @@
+/**
+ * @license
+ *
+ * Font Family: Synonym
+ * Designed by: Hugo Dumont
+ * URL: https://www.fontshare.com/fonts/synonym
+ * © 2021 Indian Type Foundry
+ *
+ * Font Styles:
+ * Synonym Variable(Variable font)
+ * Synonym Extralight
+ * Synonym Light
+ * Synonym Regular
+ * Synonym Medium
+ * Synonym Semibold
+ * Synonym Bold
+ *
+*/
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 700.0;
+*
+* available axes:
+
+* 'wght' (range from 200.0 to 700.0)
+
+*/
+
+@font-face {
+  font-family: "Synonym-Variable";
+  src: url("./assets/Synonym-Variable.woff2") format("woff2"),
+    url("./assets/Synonym-Variable.woff") format("woff"),
+    url("./assets/Synonym-Variable.ttf") format("truetype");
+  font-weight: 200 700;
+  font-display: swap;
+  font-style: normal;
+}
