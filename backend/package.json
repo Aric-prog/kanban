@@ -9,7 +9,9 @@
     "scripts": {
         "build": "tsc",
         "dev": "node --env-file=.env --watch -r ts-node/register -r tsconfig-paths/register src/bootstrap.ts",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start_win": "set NODE_ENV=production && node --env-file=.env -r ts-node/register -r tsconfig-paths/register src/bootstrap.ts",
+        "start_nix": "NODE_ENV=production && node --env-file=.env -r ts-node/register -r tsconfig-paths/register src/bootstrap.ts"
     },
     "author": "",
     "license": "ISC",
