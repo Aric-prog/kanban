@@ -1,5 +1,5 @@
 export default interface Note {
-    id: number;
+    id: number | undefined;
     title: string;
     noteDescription: string | undefined;
     noteStatus: string;
