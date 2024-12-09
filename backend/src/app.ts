@@ -8,6 +8,7 @@ import { ErrorHandler } from "@middleware/ErrorHandler";
 import RoomRepository from "@repository/RoomRepository";
 import NoteRepository from "@repository/NoteRepository";
 import DbService from "@app/database/db";
+import cors from "cors";
 import RoomService from "@service/RoomService";
 import NoteService from "@service/NoteService";
 import KanbanController from "@app/kanban/controllers/KanbanController";
@@ -19,12 +20,11 @@ export default class App {
         this.server = express();
         this.setup(options);
         this.bindServices();
-        this.run();
     }
 
     setup(options: ApplicationOptions) {
         dotenv.config({ path: path.resolve(__dirname, "../.env") });
-
+        this.server.use(cors());
         this.server.use(morgan(options.morganConfig.format));
         this.server.use(
             morgan(options.morganConfig.format, {
@@ -34,10 +34,10 @@ export default class App {
         this.server.use(express.json());
     }
 
-    bindServices(): void {
+    async bindServices(): Promise<void> {
         // Tests db connection
         const dbService: DbService = new DbService();
-        dbService.connect();
+        await dbService.connect();
 
         console.log(`Connection succesful!`);
 
@@ -49,11 +49,9 @@ export default class App {
 
         const kanbanController = new KanbanController(noteService, roomService);
 
-        this.server.use(kanbanController.router);
+        this.server.use("/api", kanbanController.router);
         this.server.use(ErrorHandler);
-    }
 
-    run() {
         this.server.listen(process.env.BACKEND_PORT || 8000, () => {
             console.log(
                 `Server (${process.env.DOMAIN}) is running at PORT : ${

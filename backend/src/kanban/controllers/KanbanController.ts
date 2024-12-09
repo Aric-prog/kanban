@@ -21,7 +21,7 @@ export default class KanbanController {
         this.router.post("/auth", asyncHandler(this.authenticateUserForRoom.bind(this)));
 
         // Note logic
-        this.router.get("/note", isAuthenticated, asyncHandler(this.getAllNotes.bind(this)));
+        this.router.get("/note", isAuthenticated, asyncHandler(this.getUserData.bind(this)));
         this.router.post("/note", isAuthenticated, asyncHandler(this.createNoteForRoom.bind(this)));
         this.router.put("/note/update", isAuthenticated, asyncHandler(this.updateNote.bind(this)));
     }
@@ -50,11 +50,15 @@ export default class KanbanController {
         return res.status(STATUS_CODE.OK).json({ message: "Authenticated", token: token });
     }
 
+    async getUserRoomId(req: Request, res: Response): Promise<any> {
+        return res.status(STATUS_CODE.OK).json({ roomId: res.locals.roomId });
+    }
+
     // Note endpoints
-    async getAllNotes(req: Request, res: Response): Promise<any> {
+    async getUserData(req: Request, res: Response): Promise<any> {
         const roomId = res.locals.roomId;
         const notes: Note[] = await this.noteService.getAllNotesFromRoom(roomId);
-        return res.status(STATUS_CODE.OK).json({ notes: notes });
+        return res.status(STATUS_CODE.OK).json({ roomId: roomId, notes: notes });
     }
 
     async createNoteForRoom(req: Request, res: Response): Promise<any> {

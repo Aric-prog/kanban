@@ -6,25 +6,25 @@ export default class NoteRepository {
 
     async updateNote(note: Note) {
         const { rows } = await this.db.query(
-            `UPDATE note SET title=$1 noteDescription=$2, noteStatus=$3, dueDate=$4 WHERE id=$5 RETURNING *`,
-            [note.title, note.notedescription, note.notestatus, note.duedate, note.id],
+            `UPDATE note SET title=$1 "noteDescription"=$2, "noteStatus"=$3, "dueDate"=$4 WHERE id=$5 RETURNING *`,
+            [note.title, note.noteDescription, note.noteStatus, note.dueDate, note.id],
         );
         return rows[0] as Note;
     }
 
     async insertNote(roomId: string, note: Partial<Note>) {
         const { rows } = await this.db.query(
-            `INSERT INTO note(title, notedescription, notestatus, duedate, roomId) 
+            `INSERT INTO note(title, "noteDescription", "noteStatus", "dueDate", "roomId") 
             VALUES($1, $2, $3, $4, $5) RETURNING *`,
-            [note.title, note.notedescription, note.notestatus, note.duedate, roomId],
+            [note.title, note.noteDescription, note.noteStatus, note.dueDate, roomId],
         );
         return rows[0] as Note;
     }
 
     async getAllNotesFromRoom(roomId: string) {
-        const { rows } = await this.db.query(
-            `SELECT * FROM note JOIN room ON room.id = note.roomid`,
-        );
+        const { rows } = await this.db.query(`SELECT * FROM note WHERE note."roomId" = $1`, [
+            roomId,
+        ]);
         return rows as Note[];
     }
 }
