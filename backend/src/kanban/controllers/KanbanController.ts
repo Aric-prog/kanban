@@ -23,7 +23,7 @@ export default class KanbanController {
         // Note logic
         this.router.get("/note", isAuthenticated, asyncHandler(this.getUserData.bind(this)));
         this.router.post("/note", isAuthenticated, asyncHandler(this.createNoteForRoom.bind(this)));
-        this.router.put("/note/update", isAuthenticated, asyncHandler(this.updateNote.bind(this)));
+        this.router.put("/note", isAuthenticated, asyncHandler(this.updateNote.bind(this)));
     }
 
     // Room endpoints
@@ -69,7 +69,7 @@ export default class KanbanController {
     }
 
     async updateNote(req: Request, res: Response): Promise<any> {
-        const updatedNote: Note = req.body.note;
+        const updatedNote: Note = req.body.note as Note;
         const note: Note = await this.noteService.updateNote(updatedNote);
         return res.status(STATUS_CODE.OK).json({ message: "Note succesfully updated", note: note });
     }

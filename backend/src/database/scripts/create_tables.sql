@@ -1,5 +1,5 @@
 DO $$ BEGIN
-    CREATE TYPE NoteStatus AS ENUM ('To do', 'In progress', 'Completed', 'Expired');
+    CREATE TYPE NoteStatus AS ENUM ('To do', 'In progress', 'Completed', 'Expired', 'Deleted');
 EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "note"(
     title TEXT NOT NULL,
     "noteDescription" TEXT,
     "noteStatus" NoteStatus NOT NULL,
-    "dueDate" TIMESTAMPTZ,
+    "dueDate" INTEGER,
     
     "roomId" TEXT,
     CONSTRAINT "roomId" FOREIGN KEY("roomId") REFERENCES room(id)

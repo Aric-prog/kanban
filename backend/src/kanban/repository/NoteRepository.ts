@@ -6,7 +6,7 @@ export default class NoteRepository {
 
     async updateNote(note: Note) {
         const { rows } = await this.db.query(
-            `UPDATE note SET title=$1 "noteDescription"=$2, "noteStatus"=$3, "dueDate"=$4 WHERE id=$5 RETURNING *`,
+            `UPDATE note SET title=$1, "noteDescription"=$2, "noteStatus"=$3, "dueDate"=$4 WHERE id=$5 RETURNING *`,
             [note.title, note.noteDescription, note.noteStatus, note.dueDate, note.id],
         );
         return rows[0] as Note;

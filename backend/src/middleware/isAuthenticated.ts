@@ -7,16 +7,20 @@ import jwt from "jsonwebtoken";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction): any => {
     const bearer = req.headers.authorization ?? "";
-    const tokenSplit = bearer.split("Bearer");
+    try {
+        const tokenSplit = bearer.split("Bearer");
 
-    if (tokenSplit.length != 2)
-        return next(new HttpException("User not authenticated", STATUS_CODE.FORBIDDEN));
+        if (tokenSplit.length != 2)
+            return next(new HttpException("User not authenticated", STATUS_CODE.FORBIDDEN));
 
-    const token = tokenSplit[1].trim();
-    const decoded = jwt.verify(token, SECRET) as TokenData;
-    res.locals = {
-        roomId: decoded.roomId,
-    };
+        const token = tokenSplit[1].trim();
+        const decoded = jwt.verify(token, SECRET) as TokenData;
+        res.locals = {
+            roomId: decoded.roomId,
+        };
+    } catch (err) {
+        next(new HttpException((err as Error).message, STATUS_CODE.FORBIDDEN));
+    }
 
     return next();
 };
