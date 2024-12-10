@@ -26,6 +26,7 @@ export default class App {
         dotenv.config({ path: path.resolve(__dirname, "../.env") });
         this.server.use(cors());
         this.server.use(morgan(options.morganConfig.format));
+        this.server.use(express.static("public"));
         this.server.use(
             morgan(options.morganConfig.format, {
                 stream: fs.createWriteStream("./access.log", { flags: "a" }),
