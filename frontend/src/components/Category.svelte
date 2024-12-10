@@ -1,9 +1,12 @@
 <script lang="ts">
-  let { categoryName, activated = true } = $props()
+  let { categoryName, activated = true, toggleCategory } = $props()
 
   let check = $state(activated)
 </script>
-<button onclick={() => {check = !check}} class="text-xs font-ibmplex flex cursor-pointer items-center 
+<button onclick={() => {
+  check = !check
+  toggleCategory()
+}} class="text-xs font-ibmplex flex cursor-pointer items-center 
   px-2 border border-sketch transition border-primary
   {check ? "bg-primary text-complement": "text-primary"}">
   <span class=" text-lg material-icons material-symbols-outlined 

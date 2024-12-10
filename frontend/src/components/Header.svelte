@@ -1,8 +1,5 @@
 <script lang="ts">
-  import Category from "./Category.svelte";
-  import { authHandlers } from "../api/auth";
   import type UserData from "../types/UserData";
-  
   let { userData, logout }: {userData: UserData, logout: () => void}  = $props()
   
 </script>

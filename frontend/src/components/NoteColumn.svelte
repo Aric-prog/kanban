@@ -2,10 +2,11 @@
   import type Note from "../types/Note";
   import NoteCard from "./NoteCard.svelte";
   
-  let { allNotes, categoryName, moveNote }: {
+  let { allNotes, categoryName, moveNote, displayed }: {
     allNotes: Note[], 
     categoryName: string, 
-    moveNote: (note: Note) => void
+    moveNote: (note: Note) => void,
+    displayed: boolean
   } = $props()
   
   let placeholder: Note = {
@@ -15,6 +16,7 @@
     noteStatus: categoryName,
     dueDate: 0,
   }
+  
   type NoteProps = {note: Note, editable: boolean};
 
   let notes: NoteProps[] = $state([]);
@@ -33,13 +35,13 @@
 
 </script>
 
-<div class="md:w-1/3 lg:w-1/3">
+<div class="md:w-1/3 lg:w-1/3 transition {displayed ? "" : "opacity-0 hidden"}">
   <span class="font-ibmplex ml-3 sm:m-0 text-complement border-b pb-1 border-complement">{categoryName}</span>
   <div class="column flex flex-col flex-wrap items-center py-2">
     {#each notes as note}
       <NoteCard noteData={note.note} moveNote={moveNote} editable={note.editable}/>
     {/each}
-    <button class="material-icons material-symbols-outlined text-5xl w-min text-complement hover:invert transition" onclick={addEmptyNote}>
+    <button class="material-icons material-symbols-outlined text-5xl w-min text-complement hover:invert transition" onclick={ addEmptyNote }>
       add_circle
     </button>
   </div>
