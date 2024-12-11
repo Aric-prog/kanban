@@ -2,7 +2,7 @@
 
 Simple note-taking application made using Node and Svelte.
 
-![Kanban Board Screenshot](./screenshot.png)
+![Kanban Board Screenshot](Screenshot.png)
 
 ## Prerequisites
 
