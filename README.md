@@ -1,5 +1,9 @@
 # Kanban
 
+Simple note-taking application made using Node and Svelte.
+
+![Kanban Board Screenshot](./screenshot.png)
+
 ## Prerequisites
 
 - Node.js >= 20.6.0
